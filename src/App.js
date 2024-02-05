@@ -51,7 +51,7 @@ const App = () => {
     }
   };
 
-  const [inputValue, setInputValue] = useState();
+  const [inputValue, setInputValue] = useState("");
 
   const { eventsData } = useSelector((s) => s.events);
 
@@ -91,7 +91,11 @@ const App = () => {
                   logo
                 </h1>
                 <Inputs>
-                  <input type="text" onChange={handleInputChange} />
+                  <input
+                    type="text"
+                    placeholder="search event name"
+                    onChange={handleInputChange}
+                  />
                 </Inputs>
               </Flex>
               <Menu

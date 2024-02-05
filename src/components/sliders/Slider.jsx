@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Flex, Layout, Menu } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import actions from "../../action/actions";
+import { Inputs } from "../../styles/Input";
+import _ from "lodash-es";
+
 const { Sider } = Layout;
 
-const { setCurrentUserData } = actions;
+const { setCurrentUserData, setFilterData } = actions;
 
 const Slider = () => {
   const navigate = useNavigate();
@@ -20,19 +23,40 @@ const Slider = () => {
       dispatch(setCurrentUserData(""));
     }
   };
+
+  const [inputValue, setInputValue] = useState("");
+
+  const { eventsData } = useSelector((s) => s.events);
+
+  const filterEventData = eventsData.filter((event) =>
+    event.name.toLowerCase().includes(inputValue)
+  );
+
+  const lodashFilteredData = _.filter(eventsData, (event) =>
+    event.name.toLowerCase().includes(inputValue)
+  );
+  console.log("lodashFilteredData: ", lodashFilteredData);
+
+  console.log("filterEventData: ", filterEventData);
+  dispatch(setFilterData(filterEventData));
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
   return (
     <Layout>
       <Flex
-        justify="flex-end"
-        align="center"
-        style={{
-          width: "100%",
-          backgroundColor: "#001529",
-          color: "#fff",
-          padding: "3% 8%",
-        }}
+        justify="space-between"
+        gap={20}
+        style={{ padding: "2% 8%", backgroundColor: "#000", width: "100%" }}
       >
-        <h1>logo</h1>
+        <h1 style={{ color: "#fff" }}>logo</h1>
+        <Inputs>
+          <input
+            type="text"
+            placeholder="search event name"
+            onChange={handleInputChange}
+          />
+        </Inputs>
       </Flex>
       <Sider
         style={{
@@ -49,20 +73,6 @@ const Slider = () => {
         }}
       >
         <div className="demo-logo-vertical" />
-        {/* <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["home"]}
-          items={[
-            { label: "home", key: "/home" },
-            { label: "Logout", key: "/" },
-            { label: "SingUp", key: "/singUp" },
-            { label: "Dashboard", key: "/dashboard" },
-          ]}
-          onClick={({ key }) => {
-            navigate(key);
-          }}
-        /> */}
         <Menu
           theme="dark"
           defaultSelectedKeys={["2"]}
@@ -77,7 +87,6 @@ const Slider = () => {
             navigate(key);
           }}
           style={{
-            // minWidth: "30%",
             padding: "10px",
           }}
         />
