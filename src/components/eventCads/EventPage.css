@@ -1,0 +1,23 @@
+.slot {
+  border: 1px solid #636262;
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.slot:hover,
+.selected-slot:hover {
+  background-color: #636262;
+  color: #fff;
+}
+
+.selected-slot {
+  background-color: #636262;
+  color: #fff;
+  border: 1px solid #636262;
+  padding: 5px;
+  border-radius: 10px;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+}
