@@ -35,10 +35,11 @@ const EventCard = () => {
   const { eventsData } = useSelector((s) => s.events);
   console.log("eventsData: ", eventsData);
   const { currentUserData } = useSelector((s) => s.currentUser);
-  const { filterData } = useSelector((s) => s.currentUser);
+  const { filterData } = useSelector((s) => s.filter);
   console.log("filterData: ", filterData);
 
   const [loading, setLoading] = useState(false);
+  const [eventDataList, setEventDataList] = useState([]);
 
   useEffect(() => {
     if (filterData) {
@@ -61,8 +62,6 @@ const EventCard = () => {
       }
     }
   }, [eventsData, currentUserData, filterData]);
-
-  const [eventDataList, setEventDataList] = useState([]);
 
   const dispatch = useDispatch();
 
