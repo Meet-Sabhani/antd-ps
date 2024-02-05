@@ -81,7 +81,7 @@ const App = () => {
               zIndex: 999,
             }}
           >
-            <Flex justify="space-between">
+            <Flex justify="space-between" gap={10}>
               <Flex>
                 <h1 className="demo-logo" style={{ color: "#fff" }}>
                   logo

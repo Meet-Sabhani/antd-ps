@@ -42,25 +42,22 @@ const EventCard = () => {
   const [eventDataList, setEventDataList] = useState([]);
 
   useEffect(() => {
-    if (filterData) {
-      if (currentUserData.userType === "Provider") {
-        const filteredEvents = filterData.filter(
-          (event) => event.providerId === currentUserData.id
-        );
-        setEventDataList(filteredEvents);
-      } else {
-        setEventDataList(filterData);
-      }
+    let filteredEvents;
+
+    if (filterData.length > 0) {
+      filteredEvents = filterData.filter(
+        (event) => event.providerId === currentUserData.id
+      );
     } else {
-      if (currentUserData.userType === "Provider") {
-        const filteredEvents = eventsData.filter(
-          (event) => event.providerId === currentUserData.id
-        );
-        setEventDataList(filteredEvents);
-      } else {
-        setEventDataList(eventsData);
-      }
+      filteredEvents =
+        currentUserData.userType === "Provider"
+          ? eventsData.filter(
+              (event) => event.providerId === currentUserData.id
+            )
+          : eventsData;
     }
+
+    setEventDataList(filteredEvents);
   }, [eventsData, currentUserData, filterData]);
 
   const dispatch = useDispatch();
