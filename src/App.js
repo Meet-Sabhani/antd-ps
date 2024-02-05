@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Slider from "./components/sliders/Slider";
 import actions from "./action/actions";
 import { Inputs } from "./styles/Input";
+import _ from "lodash-es";
 
 const { Header, Footer } = Layout;
 
@@ -51,14 +52,17 @@ const App = () => {
   };
 
   const [inputValue, setInputValue] = useState();
-  console.log("inputValue: ", inputValue);
 
   const { eventsData } = useSelector((s) => s.events);
-  console.log("eventsData: ", eventsData);
 
   const filterEventData = eventsData.filter((event) =>
     event.name.toLowerCase().includes(inputValue)
   );
+
+  const lodashFilteredData = _.filter(eventsData, (event) =>
+    event.name.toLowerCase().includes(inputValue)
+  );
+  console.log("lodashFilteredData: ", lodashFilteredData);
 
   console.log("filterEventData: ", filterEventData);
   dispatch(setFilterData(filterEventData));
@@ -81,8 +85,8 @@ const App = () => {
               zIndex: 999,
             }}
           >
-            <Flex justify="space-between" gap={10}>
-              <Flex>
+            <Flex justify="space-between">
+              <Flex justify="space-between" gap={20}>
                 <h1 className="demo-logo" style={{ color: "#fff" }}>
                   logo
                 </h1>

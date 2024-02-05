@@ -5,7 +5,6 @@ import "./Login.css";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import actions from "../../action/actions";
-import styled from "styled-components";
 
 const formItemLayout = {
   labelCol: {

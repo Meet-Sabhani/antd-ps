@@ -24,19 +24,17 @@ const cardStyle = {
 
 const imgStyle = {
   width: "100%",
-  // height: "100%",
-  height: 280,
+  height: "100%",
+  minHeight: 280,
   objectFit: "cover",
 };
 
 const { setDeleteEvent } = actions;
 
-const EventCard = () => {
+const EventCard = ({ sortOption }) => {
   const { eventsData } = useSelector((s) => s.events);
-  console.log("eventsData: ", eventsData);
   const { currentUserData } = useSelector((s) => s.currentUser);
   const { filterData } = useSelector((s) => s.filter);
-  console.log("filterData: ", filterData);
 
   const [loading, setLoading] = useState(false);
   const [eventDataList, setEventDataList] = useState([]);
@@ -66,14 +64,33 @@ const EventCard = () => {
     dispatch(setDeleteEvent(eventId));
   };
 
+  const sortEventData = (dataToSort) => {
+    if (!dataToSort || !Array.isArray(dataToSort)) {
+      return [];
+    }
+
+    switch (sortOption) {
+      case "price":
+        return dataToSort.sort((a, b) => a.price - b.price);
+      case "duration":
+        return dataToSort.sort((a, b) => a.duration - b.duration);
+      case "date":
+        return dataToSort.sort((a, b) => new Date(a.date) - new Date(b.date));
+      default:
+        return dataToSort;
+    }
+  };
+
+  const sortedDataList = sortEventData(eventDataList);
+
   return (
-    <Row gutter={[16, 16]} style={{ padding: "2% 4%", marginRight: "unset" }}>
+    <Row gutter={[16, 16]} style={{ padding: "2% 0", marginRight: "unset" }}>
       {loading ? (
         <div className="loader-overlay">
           <Skeleton />
         </div>
       ) : (
-        eventDataList.map((e) => (
+        sortedDataList.map((e) => (
           <Col xs={24} sm={24} md={12} lg={12} key={e.id}>
             <Card
               hoverable
