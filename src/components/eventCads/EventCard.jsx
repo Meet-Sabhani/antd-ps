@@ -80,96 +80,120 @@ const EventCard = ({ sortOption }) => {
   const sortedDataList = sortEventData(eventDataList);
 
   return (
-    <Row gutter={[16, 16]} style={{ padding: "2% 0", marginRight: "unset" }}>
-      {loading ? (
-        <div className="loader-overlay">
-          <Skeleton />
-        </div>
-      ) : (
-        sortedDataList.map((e) => (
-          <Col xs={24} sm={24} md={12} lg={12} key={e.id}>
-            <Card
-              hoverable
-              style={cardStyle}
-              bodyStyle={{
-                padding: 0,
-              }}
-            >
-              <Row>
-                <Col
-                  xs={24}
-                  sm={24}
-                  md={12}
-                  lg={12}
-                  style={{ display: "flex", height: "100%" }}
+    <>
+      {sortedDataList.length > 0 ? (
+        <Row
+          gutter={[16, 16]}
+          style={{ padding: "2% 0", marginRight: "unset" }}
+        >
+          {loading ? (
+            <div className="loader-overlay">
+              <Skeleton />
+            </div>
+          ) : (
+            sortedDataList.map((e) => (
+              <Col xs={24} sm={24} md={12} lg={12} key={e.id}>
+                <Card
+                  hoverable
+                  style={cardStyle}
+                  bodyStyle={{
+                    padding: 0,
+                  }}
                 >
-                  <Image
-                    alt="avatar"
-                    fallback="https://t3.ftcdn.net/jpg/03/45/05/92/360_F_345059232_CPieT8RIWOUk4JqBkkWkIETYAkmz2b75.jpg"
-                    src={e.image}
-                    style={imgStyle}
-                  />
-                </Col>
-                <Col xs={24} sm={24} md={12} lg={12}>
-                  <CardWrap>
-                    <Flex
-                      vertical
-                      align="center"
-                      justify="center"
-                      style={{
-                        padding: "3% 0",
-                      }}
+                  <Row>
+                    <Col
+                      xs={24}
+                      sm={24}
+                      md={12}
+                      lg={12}
+                      style={{ display: "flex", height: "100%" }}
                     >
-                      <Typography.Title level={3}>{e.name}</Typography.Title>
-                      <p>{e.description}</p>
-                      <h3>duration: {e.duration}</h3>
-                      <h4>{moment(e.date).format("L")}</h4>
-                      <h4>
-                        {moment(e.timeRange[0]).format("LT")} -{" "}
-                        {moment(e.timeRange[1]).format("LT")}
-                      </h4>
-                      <h2>price: ${e.price}</h2>
+                      <Image
+                        alt="avatar"
+                        fallback="https://t3.ftcdn.net/jpg/03/45/05/92/360_F_345059232_CPieT8RIWOUk4JqBkkWkIETYAkmz2b75.jpg"
+                        src={e.image}
+                        style={imgStyle}
+                      />
+                    </Col>
+                    <Col xs={24} sm={24} md={12} lg={12}>
+                      <CardWrap>
+                        <Flex
+                          vertical
+                          align="center"
+                          justify="center"
+                          style={{
+                            padding: "3% 0",
+                          }}
+                        >
+                          <Typography.Title level={3}>
+                            {e.name}
+                          </Typography.Title>
+                          <p>{e.description}</p>
+                          <h3>duration: {e.duration}</h3>
+                          <h4>{moment(e.date).format("L")}</h4>
+                          <h4>
+                            {moment(e.timeRange[0]).format("LT")} -{" "}
+                            {moment(e.timeRange[1]).format("LT")}
+                          </h4>
+                          <h2>price: ${e.price}</h2>
 
-                      {currentUserData.userType === "Provider" ? (
-                        <Flex gap={6} wrap="wrap" justify="center">
-                          <Button type="primary">
-                            <Link to={`/addEventData/${e.id}`}> Edit </Link>
-                          </Button>
-                          <Button
-                            type="primary"
-                            onClick={() => handleDelete(e.id)}
-                          >
-                            Delate
-                          </Button>
-                          <Button type="primary">
-                            <Link
-                              type="primary"
-                              style={{ color: "#fff" }}
-                              to={`/detail/${e.id}`}
-                            >
-                              Detail
-                            </Link>
-                          </Button>
+                          {currentUserData.userType === "Provider" ? (
+                            <Flex gap={6} wrap="wrap" justify="center">
+                              <Button type="primary">
+                                <Link to={`/addEventData/${e.id}`}> Edit </Link>
+                              </Button>
+                              <Button
+                                type="primary"
+                                onClick={() => handleDelete(e.id)}
+                              >
+                                Delate
+                              </Button>
+                              <Button type="primary">
+                                <Link
+                                  type="primary"
+                                  style={{ color: "#fff" }}
+                                  to={`/detail/${e.id}`}
+                                >
+                                  Detail
+                                </Link>
+                              </Button>
+                            </Flex>
+                          ) : (
+                            <Button type="primary">
+                              <Link
+                                style={{ color: "#fff" }}
+                                to={`/detail/${e.id}`}
+                              >
+                                buy
+                              </Link>
+                            </Button>
+                          )}
                         </Flex>
-                      ) : (
-                        <Button type="primary">
-                          <Link
-                            style={{ color: "#fff" }}
-                            to={`/detail/${e.id}`}
-                          >
-                            buy
-                          </Link>
-                        </Button>
-                      )}
-                    </Flex>
-                  </CardWrap>
-                </Col>
-              </Row>
-            </Card>
-          </Col>
-        ))
+                      </CardWrap>
+                    </Col>
+                  </Row>
+                </Card>
+              </Col>
+            ))
+          )}
+        </Row>
+      ) : (
+        <>
+          {currentUserData.userType === "Provider" ? (
+            <>
+            <Flex justify="center">
+              <h1>
+                no venus added, <Link to={"/addEventData"}> click</Link> to add
+                Vennus
+              </h1>
+              </Flex>
+            </>
+          ) : (
+            <h1>no venus available </h1>
+          )}
+        </>
       )}
-    </Row>
+    </>
   );
 };
 
