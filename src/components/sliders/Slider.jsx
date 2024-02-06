@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Flex, Layout, Menu, Modal } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import actions from "../../action/actions";
 import { Inputs } from "../../styles/Input";
@@ -56,6 +56,9 @@ const Slider = () => {
     setIsModalOpen(false);
   };
 
+  const location = useLocation();
+  const currentPath = location.pathname;
+
   return (
     <Layout>
       <Flex
@@ -74,8 +77,10 @@ const Slider = () => {
       </Flex>
       <Sider
         style={{
-          position: "absolute",
-          zIndex: 2,
+          position: "fixed",
+          top: 0,
+
+          zIndex: 999,
         }}
         breakpoint="lg"
         collapsedWidth="0"
@@ -89,10 +94,10 @@ const Slider = () => {
         <div className="demo-logo-vertical" />
         <Menu
           theme="dark"
-          defaultSelectedKeys={["2"]}
+          defaultSelectedKeys={[currentPath]}
           items={[
             { label: "Home", key: "/home" },
-            { label: "Dashboard", key: "/dashboard" },
+            { label: "Bookings", key: "/bookings" },
             currentUserData
               ? { label: "Logout", key: "logout" }
               : { label: "Login", key: "/" },
