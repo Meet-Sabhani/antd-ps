@@ -30,49 +30,56 @@ const Bookings = () => {
     <Flex>
       <Container>
         <Heading>Bookings</Heading>
-
         {filterData.length > 0 ? (
-          <h1>Booking available</h1>
-        ) : currentUserData.userType === "Provider" ? (
-          <Row gutter={[16, 16]} style={{ marginRight: 0 }}>
-            {filterData.map((event, i) => {
-              return (
-                <Col key={i} span={8}>
-                  <BookingCard>
-                    <h4> Name : {event.eventInfo.name}</h4>
-                    <img src={event.eventInfo.image} width={"100%"} alt="" />
-                    <h3>slots</h3>
-                    <Flex wrap="wrap" gap={6}>
-                      {event.slots.map((s) => {
-                        return <div className="selected-slot">{s}</div>;
-                      })}
-                    </Flex>
-                    <h3>user Name : {event.user.username}</h3>
-                    <h3>user email : {event.user.email}</h3>
-                  </BookingCard>
-                </Col>
-              );
-            })}
-          </Row>
+          <>
+            {currentUserData.userType === "Provider" ? (
+              <Row gutter={[16, 16]} style={{ marginRight: 0 }}>
+                {filterData.map((event, i) => {
+                  return (
+                    <Col key={i} span={8}>
+                      <BookingCard>
+                        <h4> Name : {event.eventInfo.name}</h4>
+                        <img
+                          src={event.eventInfo.image}
+                          width={"100%"}
+                          alt=""
+                        />
+                        <h3>slots</h3>
+                        <Flex wrap="wrap" gap={6}>
+                          {event.slots.map((s) => {
+                            return <div className="selected-slot">{s}</div>;
+                          })}
+                        </Flex>
+                        <h3>user Name : {event.user.username}</h3>
+                        <h3>user email : {event.user.email}</h3>
+                      </BookingCard>
+                    </Col>
+                  );
+                })}
+              </Row>
+            ) : (
+              <Row gutter={[16, 16]} style={{ marginRight: 0 }}>
+                {filterData.map((event, i) => {
+                  return (
+                    <Col key={i} span={8}>
+                      <BookingCard>
+                        <h4> Name : {event.eventInfo.name}</h4>
+                        <img src={event.eventInfo.image} alt="" />
+                        <h3>slots</h3>
+                        <Flex wrap="wrap" gap={6}>
+                          {event.slots.map((s) => {
+                            return <div className="selected-slot">{s}</div>;
+                          })}
+                        </Flex>
+                      </BookingCard>
+                    </Col>
+                  );
+                })}
+              </Row>
+            )}
+          </>
         ) : (
-          <Row gutter={[16, 16]} style={{ marginRight: 0 }}>
-            {filterData.map((event, i) => {
-              return (
-                <Col key={i} span={8}>
-                  <BookingCard>
-                    <h4> Name : {event.eventInfo.name}</h4>
-                    <img src={event.eventInfo.image} alt="" />
-                    <h3>slots</h3>
-                    <Flex wrap="wrap" gap={6}>
-                      {event.slots.map((s) => {
-                        return <div className="selected-slot">{s}</div>;
-                      })}
-                    </Flex>
-                  </BookingCard>
-                </Col>
-              );
-            })}
-          </Row>
+          <h1>No Booking available</h1>
         )}
       </Container>
     </Flex>

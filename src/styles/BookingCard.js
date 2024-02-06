@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const BookingCard = styled.div`
-  background-color: black;
+  background-color: #dadada;
   padding: 4% 0;
   border-radius: 8px;
   transition: 0.3s;
