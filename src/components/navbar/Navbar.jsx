@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Flex, Layout, Menu } from "antd";
+import { Flex, Layout, Menu, Modal } from "antd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +9,7 @@ import { Inputs } from "../../styles/Input";
 
 const { Header } = Layout;
 
-const { setFilterData } = actions;
+const { setFilterData, setCurrentUserData } = actions;
 
 const Navbar = () => {
   const [width, setWidth] = useState(window.innerWidth);
@@ -46,6 +46,15 @@ const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    navigate("/");
+    dispatch(setCurrentUserData(""));
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
   };
 
   const location = useLocation();
@@ -105,6 +114,14 @@ const Navbar = () => {
               }}
             />
           </Flex>
+          <Modal
+            title="Basic Modal"
+            open={isModalOpen}
+            onOk={handleOk}
+            onCancel={handleCancel}
+          >
+            <p>are you sure</p>
+          </Modal>
         </Header>
       )}
     </>

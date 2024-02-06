@@ -1,6 +1,6 @@
-import { Layout, Modal } from "antd";
+import { Flex, Layout, Tooltip } from "antd";
 import { GlobalStyle } from "./styles/GlobalStyle";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { Content } from "antd/es/layout/layout";
 import Login from "./components/login/Login";
 import AddEventData from "./components/provider/AddEventData";
@@ -11,30 +11,17 @@ import Bookings from "./components/bookings/Bookings";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Slider from "./components/sliders/Slider";
-import actions from "./action/actions";
-import _ from "lodash-es";
 import Navbar from "./components/navbar/Navbar";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import {
+  FacebookOutlined,
+  InstagramOutlined,
+  LinkedinOutlined,
+  TwitterOutlined,
+} from "@ant-design/icons";
 
 const { Footer } = Layout;
 
-const { setCurrentUserData } = actions;
-
 const App = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const handleOk = () => {
-    navigate("/");
-    dispatch(setCurrentUserData(""));
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
   return (
     <>
       <Navbar />
@@ -45,24 +32,65 @@ const App = () => {
             padding: "0 48px",
           }}
         >
-          <DataContent />
+          <Routes>
+            <Route path="/singUp" element={<SingUp />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/addEventData/:eventId" element={<AddEventData />} />
+            <Route path="/addEventData" element={<AddEventData />} />
+            <Route path="/detail/:productId" element={<EventPage />} />
+            <Route path="/about" element={<Slider />} />
+            <Route path="/bookings" element={<Bookings />} />
+            <Route path="*" element={<div>404 page not found</div>} />
+          </Routes>
         </Content>
-        <Footer
-          style={{
-            textAlign: "center",
-          }}
-        >
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
+        <Footer theme="dark">
+          <Flex justify="space-around" wrap="wrap" align="center">
+            <h1>vennus</h1>
+            <Flex gap={8} wrap="wrap">
+              <Tooltip title="Linkedin">
+                <a
+                  href="https://www.linkedin.com/in/meet-sabhani-548829196/"
+                  target="_blank"
+                >
+                  <LinkedinOutlined
+                    style={{ fontSize: "25px", color: "#000" }}
+                  />
+                </a>
+              </Tooltip>
+              <Tooltip title="facebook">
+                <a href="https://ant.design/components/icon" target="_blank">
+                  <FacebookOutlined
+                    style={{ fontSize: "25px", color: "#000" }}
+                  />
+                </a>
+              </Tooltip>
+              <Tooltip title="Twitter">
+                <a href="https://twitter.com/sabhani_meet" target="_blank">
+                  <TwitterOutlined
+                    style={{ fontSize: "25px", color: "#000" }}
+                  />
+                </a>
+              </Tooltip>
+              <Tooltip title="Instagram">
+                <a
+                  href="https://www.instagram.com/meet_sabhani_18/"
+                  target="_blank"
+                >
+                  <InstagramOutlined
+                    style={{ fontSize: "25px", color: "#000" }}
+                  />
+                </a>
+              </Tooltip>
+            </Flex>
+          </Flex>
+          <Flex justify="center">
+            Booking System &copy;{new Date().getFullYear()} Created by Meet
+            Sabhani
+          </Flex>
         </Footer>
       </Layout>
-      <Modal
-        title="Basic Modal"
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <p>are you sure</p>
-      </Modal>
+
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -79,21 +107,3 @@ const App = () => {
   );
 };
 export default App;
-
-const DataContent = () => {
-  return (
-    <>
-      <Routes>
-        <Route path="/singUp" element={<SingUp />} />
-        <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/addEventData/:eventId" element={<AddEventData />} />
-        <Route path="/addEventData" element={<AddEventData />} />
-        <Route path="/detail/:productId" element={<EventPage />} />
-        <Route path="/about" element={<Slider />} />
-        <Route path="/bookings" element={<Bookings />} />
-        <Route path="*" element={<div>404 page not found</div>} />
-      </Routes>
-    </>
-  );
-};
