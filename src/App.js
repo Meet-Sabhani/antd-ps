@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Flex, Layout, Menu } from "antd";
+import { Flex, Layout, Menu, Modal } from "antd";
 import { GlobalStyle } from "./styles/GlobalStyle";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { Content } from "antd/es/layout/layout";
@@ -43,14 +43,6 @@ const App = () => {
 
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    const confirmed = window.confirm("Are you sure you want to logout?");
-    if (confirmed) {
-      navigate("/");
-      dispatch(setCurrentUserData(""));
-    }
-  };
-
   const [inputValue, setInputValue] = useState("");
 
   const { eventsData } = useSelector((s) => s.events);
@@ -59,16 +51,29 @@ const App = () => {
     event.name.toLowerCase().includes(inputValue)
   );
 
-  const lodashFilteredData = _.filter(eventsData, (event) =>
-    event.name.toLowerCase().includes(inputValue)
-  );
-  console.log("lodashFilteredData: ", lodashFilteredData);
+  // const lodashFilteredData = _.filter(eventsData, (event) =>
+  //   event.name.toLowerCase().includes(inputValue)
+  // );
+  // console.log("lodashFilteredData: ", lodashFilteredData);
 
   console.log("filterEventData: ", filterEventData);
   dispatch(setFilterData(filterEventData));
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    navigate("/");
+    dispatch(setCurrentUserData(""));
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -90,13 +95,17 @@ const App = () => {
                 <h1 className="demo-logo" style={{ color: "#fff" }}>
                   logo
                 </h1>
-                <Inputs>
-                  <input
-                    type="text"
-                    placeholder="search event name"
-                    onChange={handleInputChange}
-                  />
-                </Inputs>
+                {currentUserData ? (
+                  <Inputs>
+                    <input
+                      type="text"
+                      placeholder="search event name"
+                      onChange={handleInputChange}
+                    />
+                  </Inputs>
+                ) : (
+                  ""
+                )}
               </Flex>
               <Menu
                 theme="dark"
@@ -106,11 +115,15 @@ const App = () => {
                   { label: "Home", key: "/home" },
                   { label: "Dashboard", key: "/dashboard" },
                   currentUserData
-                    ? { label: "Logout", onClick: handleLogout }
+                    ? { label: "Logout", key: "logout" }
                     : { label: "Login", key: "/" },
                 ]}
                 onClick={({ key }) => {
-                  navigate(key);
+                  if (key === "logout" && currentUserData) {
+                    showModal();
+                  } else {
+                    navigate(key);
+                  }
                 }}
                 style={{
                   minWidth: "30%",
@@ -134,6 +147,14 @@ const App = () => {
           Ant Design ©{new Date().getFullYear()} Created by Ant UED
         </Footer>
       </Layout>
+      <Modal
+        title="Basic Modal"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <p>are you sure</p>
+      </Modal>
       <ToastContainer
         position="top-right"
         autoClose={3000}
