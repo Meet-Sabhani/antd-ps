@@ -6,7 +6,9 @@
   transition: 0.3s ease-in-out;
 }
 
-.slot:hover,
+.slot:hover {
+  background-color: #dadada;
+}
 .selected-slot:hover {
   background-color: #636262;
   color: #fff;

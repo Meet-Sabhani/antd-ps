@@ -1,13 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Flex, Layout, Menu, Modal } from "antd";
+import { Layout, Modal } from "antd";
 import { GlobalStyle } from "./styles/GlobalStyle";
-import {
-  Link,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { Content } from "antd/es/layout/layout";
 import Login from "./components/login/Login";
 import AddEventData from "./components/provider/AddEventData";
@@ -17,62 +10,23 @@ import EventPage from "./components/eventCads/EventPage";
 import Bookings from "./components/bookings/Bookings";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch, useSelector } from "react-redux";
 import Slider from "./components/sliders/Slider";
 import actions from "./action/actions";
-import { Inputs } from "./styles/Input";
 import _ from "lodash-es";
+import Navbar from "./components/navbar/Navbar";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 
-const { Header, Footer } = Layout;
+const { Footer } = Layout;
 
-const { setCurrentUserData, setFilterData } = actions;
+const { setCurrentUserData } = actions;
 
 const App = () => {
-  const [width, setWidth] = useState(window.innerWidth);
-  console.log("width: ", width);
-
-  const { currentUserData } = useSelector((s) => s.currentUser);
-  console.log("currentUserData: ", currentUserData);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const navigate = useNavigate();
-  useEffect(() => {
-    const handleResize = () => {
-      setWidth(window.innerWidth);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   const dispatch = useDispatch();
 
-  const [inputValue, setInputValue] = useState("");
-
-  const { eventsData } = useSelector((s) => s.events);
-
-  const filterEventData = eventsData.filter((event) =>
-    event.name.toLowerCase().includes(inputValue)
-  );
-
-  // const lodashFilteredData = _.filter(eventsData, (event) =>
-  //   event.name.toLowerCase().includes(inputValue)
-  // );
-  // console.log("lodashFilteredData: ", lodashFilteredData);
-
-  console.log("filterEventData: ", filterEventData);
-  dispatch(setFilterData(filterEventData));
-
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-  };
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
   const handleOk = () => {
     navigate("/");
     dispatch(setCurrentUserData(""));
@@ -81,69 +35,11 @@ const App = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  const location = useLocation();
-  const currentPath = location.pathname;
-
   return (
     <>
+      <Navbar />
       <GlobalStyle />
       <Layout>
-        {width <= 700 ? (
-          <Slider />
-        ) : (
-          <Header
-            style={{
-              position: "sticky",
-              top: 0,
-              zIndex: 999,
-            }}
-          >
-            <Flex justify="space-between">
-              <Flex justify="space-between" gap={20} align="center">
-                <Link
-                  to="/home"
-                  className="demo-logo"
-                  style={{ color: "#fff", fontSize: "2rem" }}
-                >
-                  Venuss
-                </Link>
-                {currentUserData ? (
-                  <Inputs>
-                    <input
-                      type="text"
-                      placeholder="search event name"
-                      onChange={handleInputChange}
-                    />
-                  </Inputs>
-                ) : (
-                  ""
-                )}
-              </Flex>
-              <Menu
-                theme="dark"
-                mode="horizontal"
-                defaultSelectedKeys={[currentPath]}
-                items={[
-                  { label: "Home", key: "/home" },
-                  { label: "Bookings", key: "/bookings" },
-                  currentUserData
-                    ? { label: "Logout", key: "logout" }
-                    : { label: "Login", key: "/" },
-                ]}
-                onClick={({ key }) => {
-                  if (key === "logout") {
-                    showModal();
-                  } else {
-                    navigate(key);
-                  }
-                }}
-                style={{
-                  minWidth: "30%",
-                }}
-              />
-            </Flex>
-          </Header>
-        )}
         <Content
           style={{
             padding: "0 48px",
