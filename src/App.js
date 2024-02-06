@@ -125,7 +125,7 @@ const App = () => {
                 defaultSelectedKeys={[currentPath]}
                 items={[
                   { label: "Home", key: "/home" },
-                  { label: "Dashboard", key: "/dashboard" },
+                  { label: "Bookings", key: "/bookings" },
                   currentUserData
                     ? { label: "Logout", key: "logout" }
                     : { label: "Login", key: "/" },
