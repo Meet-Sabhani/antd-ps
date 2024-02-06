@@ -94,11 +94,11 @@ const Slider = () => {
             { label: "Home", key: "/home" },
             { label: "Dashboard", key: "/dashboard" },
             currentUserData
-              ? { label: "Logout", key: "logout", onClick: showModal }
+              ? { label: "Logout", key: "logout" }
               : { label: "Login", key: "/" },
           ]}
           onClick={({ key }) => {
-            if (key === "logout" && currentUserData) {
+            if (key === "logout") {
               showModal();
             } else {
               navigate(key);

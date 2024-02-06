@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Flex, Layout, Menu, Modal } from "antd";
 import { GlobalStyle } from "./styles/GlobalStyle";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { Content } from "antd/es/layout/layout";
 import Login from "./components/login/Login";
 import AddEventData from "./components/provider/AddEventData";
@@ -75,6 +75,8 @@ const App = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   return (
     <>
@@ -110,7 +112,7 @@ const App = () => {
               <Menu
                 theme="dark"
                 mode="horizontal"
-                defaultSelectedKeys={["2"]}
+                defaultSelectedKeys={[currentPath]}
                 items={[
                   { label: "Home", key: "/home" },
                   { label: "Dashboard", key: "/dashboard" },
@@ -119,7 +121,7 @@ const App = () => {
                     : { label: "Login", key: "/" },
                 ]}
                 onClick={({ key }) => {
-                  if (key === "logout" && currentUserData) {
+                  if (key === "logout") {
                     showModal();
                   } else {
                     navigate(key);

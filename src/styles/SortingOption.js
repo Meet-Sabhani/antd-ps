@@ -6,9 +6,16 @@ export const SortingOption = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 3px;
 
   select {
-    padding: 10px;
+    padding: 8px;
     background: #dadada;
+    outline: none;
+    border-radius: 8px;
+  }
+
+  option {
+    padding: 20px;
   }
 `;
