@@ -38,21 +38,17 @@ const EventCard = ({ sortOption }) => {
 
   const [loading, setLoading] = useState(false);
   const [eventDataList, setEventDataList] = useState([]);
+  console.log("eventDataList: ", eventDataList);
 
   useEffect(() => {
     let filteredEvents;
 
-    if (filterData.length > 0) {
+    if (filterData.length > 0 && currentUserData.userType === "Provider") {
       filteredEvents = filterData.filter(
         (event) => event.providerId === currentUserData.id
       );
     } else {
-      filteredEvents =
-        currentUserData.userType === "Provider"
-          ? eventsData.filter(
-              (event) => event.providerId === currentUserData.id
-            )
-          : eventsData;
+      filteredEvents = [...eventsData];
     }
 
     setEventDataList(filteredEvents);
@@ -132,7 +128,7 @@ const EventCard = ({ sortOption }) => {
                         {moment(e.timeRange[0]).format("LT")} -{" "}
                         {moment(e.timeRange[1]).format("LT")}
                       </h4>
-                      <h2>price:{e.price}</h2>
+                      <h2>price: ${e.price}</h2>
 
                       {currentUserData.userType === "Provider" ? (
                         <Flex gap={6} wrap="wrap" justify="center">

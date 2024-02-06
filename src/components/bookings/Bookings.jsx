@@ -30,7 +30,10 @@ const Bookings = () => {
     <Flex>
       <Container>
         <Heading>Bookings</Heading>
-        {currentUserData.userType === "Provider" ? (
+
+        {filterData.length > 0 ? (
+          <h1>Booking available</h1>
+        ) : currentUserData.userType === "Provider" ? (
           <Row gutter={[16, 16]} style={{ marginRight: 0 }}>
             {filterData.map((event, i) => {
               return (

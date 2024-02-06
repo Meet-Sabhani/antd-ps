@@ -19,9 +19,9 @@ const Home = () => {
         <h1>Dubai, United Arab Emirate</h1>
         <p>we Found 324 amazing VENUS</p>
         <select name="sorting" onChange={(e) => setSortOption(e.target.value)}>
-          <option value="price">sort by : price</option>
-          <option value="duration">sort by : duration</option>
           <option value="date">sort by : date</option>
+          <option value="duration">sort by : duration</option>
+          <option value="price">sort by : price</option>
         </select>
       </SortingOption>
       <Layout>
