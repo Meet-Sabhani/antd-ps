@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Flex, Layout, Menu } from "antd";
+import { Flex, Layout, Menu, Modal } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import actions from "../../action/actions";
@@ -42,6 +42,20 @@ const Slider = () => {
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    navigate("/");
+    dispatch(setCurrentUserData(""));
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <Layout>
       <Flex
@@ -80,17 +94,30 @@ const Slider = () => {
             { label: "Home", key: "/home" },
             { label: "Dashboard", key: "/dashboard" },
             currentUserData
-              ? { label: "Logout", key: "/", onClick: handleLogout }
+              ? { label: "Logout", key: "logout", onClick: showModal }
               : { label: "Login", key: "/" },
           ]}
           onClick={({ key }) => {
-            navigate(key);
+            if (key === "logout" && currentUserData) {
+              showModal();
+            } else {
+              navigate(key);
+            }
           }}
           style={{
             padding: "10px",
           }}
         />
       </Sider>
+
+      <Modal
+        title="Basic Modal"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <p>are you sure</p>
+      </Modal>
     </Layout>
   );
 };
