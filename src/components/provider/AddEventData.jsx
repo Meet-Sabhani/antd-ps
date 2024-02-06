@@ -70,8 +70,8 @@ const AddEventData = () => {
         duration: matchingEvent?.duration,
         date: moment(matchingEvent?.date),
         timeRange: [
-          moment(matchingEvent?.startTime),
-          moment(matchingEvent?.endTime),
+          moment(matchingEvent?.timeRange[0]),
+          moment(matchingEvent?.timeRange[1]),
         ],
       });
     }
@@ -167,7 +167,7 @@ const AddEventData = () => {
           </Form.Item>
 
           <Form.Item
-            label="TextArea"
+            label="Description"
             name="description"
             rules={[
               {
@@ -193,7 +193,6 @@ const AddEventData = () => {
               style={{
                 width: 120,
               }}
-              defaultValue="30"
             >
               <Select.Option value="30">30 minis</Select.Option>
               <Select.Option value="60">1 hour</Select.Option>
@@ -225,7 +224,10 @@ const AddEventData = () => {
               },
             ]}
           >
-            <TimePicker.RangePicker />
+            <TimePicker.RangePicker
+              value={form.getFieldValue("timeRange")}
+              onChange={(dates) => form.setFieldsValue({ timeRange: dates })}
+            />
           </Form.Item>
 
           <Flex justify="center">

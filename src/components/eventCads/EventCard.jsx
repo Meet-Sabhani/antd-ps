@@ -129,8 +129,8 @@ const EventCard = ({ sortOption }) => {
                       <h3>duration: {e.duration}</h3>
                       <h4>{moment(e.date).format("L")}</h4>
                       <h4>
-                        {moment(e.timeRange[0]).format("LTS")} -{" "}
-                        {moment(e.timeRange[1]).format("LTS")}
+                        {moment(e.timeRange[0]).format("LT")} -{" "}
+                        {moment(e.timeRange[1]).format("LT")}
                       </h4>
                       <h2>price:{e.price}</h2>
 

@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Flex, Layout, Menu, Modal } from "antd";
 import { GlobalStyle } from "./styles/GlobalStyle";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import {
+  Link,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { Content } from "antd/es/layout/layout";
 import Login from "./components/login/Login";
 import AddEventData from "./components/provider/AddEventData";
@@ -93,10 +99,14 @@ const App = () => {
             }}
           >
             <Flex justify="space-between">
-              <Flex justify="space-between" gap={20}>
-                <h1 className="demo-logo" style={{ color: "#fff" }}>
-                  logo
-                </h1>
+              <Flex justify="space-between" gap={20} align="center">
+                <Link
+                  to="/home"
+                  className="demo-logo"
+                  style={{ color: "#fff", fontSize: "2rem" }}
+                >
+                  Venuss
+                </Link>
                 {currentUserData ? (
                   <Inputs>
                     <input
